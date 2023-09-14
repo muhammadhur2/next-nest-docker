@@ -1,0 +1,22 @@
+version: '3'
+services:
+  frontend:
+    build: ./next-fe
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+  backend:
+    build: ./nest-be
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://myuser:mypassword@db:5432/mydatabase"
+  db:
+    image: postgres:16rc1-alpine
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
